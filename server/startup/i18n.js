@@ -36,7 +36,7 @@ async function directoryExists(dirPath) {
 
 export function loadTranslation(source) {
   try {
-    if (!bulkAssetOp) bulkAssetOp = bulkAssetOp = rawAssetsCollection.initializeUnorderedBulkOp();
+    if (!bulkAssetOp) bulkAssetOp = rawAssetsCollection.initializeUnorderedBulkOp();
     const content = typeof source === "string" ? JSON.parse(source) : source;
     const json = typeof source === "object" ? JSON.stringify(source) : source;
     const { i18n, ns } = content[0];
@@ -96,9 +96,8 @@ export async function loadCoreTranslations() {
     for (const file of files) {
       if (file.endsWith(".json")) {
         Logger.debug(`Importing Translations from ${file}`);
-        let json;
         try {
-          json = await fs.readFile(path.join(i18nFolder, file), "utf8");
+          const json = await fs.readFile(path.join(i18nFolder, file), "utf8");
           loadTranslation(json);
         } catch (error) {
           Logger.error(`Failed to load translations from ${file}`);
